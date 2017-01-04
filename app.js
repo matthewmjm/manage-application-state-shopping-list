@@ -57,3 +57,30 @@ function deleteItem(state, itemName) {
     }
     itemsArray.splice(index, 1);
 }
+
+//          render shopping list
+function renderList(state, JQueryElement) {
+    var renderedHTML = state.items.map(function (item) {
+        var row = '';
+        row += '<li>';
+        if (item.checked == false) {
+            row += '<span class="shopping-item">' + item.name + '</span>';
+        } else {
+            row += '<span class="shopping-item shopping-item__checked">' + item.name + '</span>';
+        }
+        row += '<div class="shopping-item-controls">';
+        row += '<button class="shopping-item-toggle">';
+        row += '<span class="button-label">check</span>';
+        row += '</button>';
+        row += '<button class="shopping-item-delete">';
+        row += '<span class="button-label">delete</span>';
+        row += '</button>';
+        row += '</div>';
+        row += '</li>';
+
+        return row;
+    });
+    JQueryElement.html(renderedHTML);
+    // reset the input field to an empty value
+    $('#shopping-list-entry').val('');
+}
