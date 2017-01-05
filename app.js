@@ -84,3 +84,38 @@ function renderList(state, JQueryElement) {
     // reset the input field to an empty value
     $('#shopping-list-entry').val('');
 }
+//
+//STEP2: Using functions and objects
+//
+//  to add items to the shopping list after page loads
+$(document).ready(function () {
+    renderList(state, $('.shopping-list'));
+    $('#js-shopping-list-form').on('submit keypress', function (event) {
+        if (event.type === 'keypress' && event.which === 13 || event.type === 'submit') {
+            event.preventDefault();
+            var itemName = $('.shopping-list-entry').val();
+            var shoppingItem = {
+                name: itemName,
+                checked: false
+            }
+            if (itemName) {
+                addItem(state, shoppingItem);
+                renderList(state, $('.shopping-list'));
+            }
+        }
+    });
+});
+//
+//  when click on the shopping list toggle button to check item
+$('.ul').on('click', 'button-shopping-item-toggle', (function (event) {
+            var itemName = $(this).closest('li').find('.shopping-item').text();
+            checkItem(state, itemName);
+            renderList(state, $('.shopping-list'));
+        });
+        //
+        // when click on the shopping list delete button to delete item
+        $('.ul').on('click', 'button-shopping-item-delete', (function (event) {
+                var itemName = $(this).closest('li').find('.shopping-item').text();
+                removeItem(state, itemName);
+                renderList(state, $('.shopping-list'));
+            });
