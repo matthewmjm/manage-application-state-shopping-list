@@ -31,7 +31,7 @@ var state = {
             checked: false
             }
                 ]
-};
+}
 
 //          add items to shopping list
 function addItem(state, itemObj) {
@@ -41,8 +41,9 @@ function addItem(state, itemObj) {
 //          check and uncheck items in shopping list
 function checkItem(state, itemName) {
     var itemsArray = state.items;
-    for (var = 0; i < state.items.length; i++) {
-        if (state.items[i] === itemName) {
+
+    for (var i = 0; i < state.items.length; i++) {
+        if (state.items[i].name === itemName) {
             state.items[i].checked = !state.items[i].checked;
         }
     }
@@ -50,8 +51,8 @@ function checkItem(state, itemName) {
 //          delete items in shopping list
 function deleteItem(state, itemName) {
     var itemsArray = state.items;
-    for (var = 0; i < state.items.length; i++) {
-        if (state.items[i] === itemName) {
+    for (var i = 0; i < state.items.length; i++) {
+        if (state.items[i].name === itemName) {
             var index = i;
         }
     }
@@ -93,7 +94,7 @@ $(document).ready(function () {
     $('#js-shopping-list-form').on('submit keypress', function (event) {
         if (event.type === 'keypress' && event.which === 13 || event.type === 'submit') {
             event.preventDefault();
-            var itemName = $('.shopping-list-entry').val();
+            var itemName = $('#shopping-list-entry').val();
             var shoppingItem = {
                 name: itemName,
                 checked: false
@@ -107,15 +108,15 @@ $(document).ready(function () {
 });
 //
 //  when click on the shopping list toggle button to check item
-$('.ul').on('click', 'button-shopping-item-toggle', (function (event) {
-            var itemName = $(this).closest('li').find('.shopping-item').text();
-            checkItem(state, itemName);
-            renderList(state, $('.shopping-list'));
-        });
-        //
-        // when click on the shopping list delete button to delete item
-        $('.ul').on('click', 'button-shopping-item-delete', (function (event) {
-                var itemName = $(this).closest('li').find('.shopping-item').text();
-                removeItem(state, itemName);
-                renderList(state, $('.shopping-list'));
-            });
+$('ul').on('click', 'button.shopping-item-toggle', function (event) {
+    var itemName = $(this).closest('li').find('.shopping-item').text();
+    checkItem(state, itemName);
+    renderList(state, $('.shopping-list'));
+});
+//
+// when click on the shopping list delete button to delete item
+$('ul').on('click', 'button.shopping-item-delete', function (event) {
+    var itemName = $(this).closest('li').find('.shopping-item').text();
+    deleteItem(state, itemName);
+    renderList(state, $('.shopping-list'));
+});
